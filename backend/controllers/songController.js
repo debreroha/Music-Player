@@ -1,61 +1,73 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import Song from '../models/song.js'
+import Song from '../models/song.js';
 
-// list or access all songs
-// fetch a songs
+// Get all songs
 // GET /api/songs/
 const getSongs = asyncHandler(async (req, res) => {
-    Song.find()
-    .then(songs => res.json(songs))
-    .catch(err => res.status(400).json('Error: ' + err));
-})
+  try {
+    const songs = await Song.find();
+    res.json(songs);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-// add a songs
+// Add a song
 // POST /api/songs/add
-const addSong = asyncHandler(async(req, res) => {
-    const title = req.body.title;
-    const artist = req.body.artist;
-    const album = req.body.album;
-    const genre = req.body.genre;
-  
-    const newSong = new Song({title, artist, album, genre});
-  
-    newSong.save()
-      .then(() => res.json('Song added!'))
-      .catch(err => res.status(400).json('Error: ' + err));
-  })
+const addSong = asyncHandler(async (req, res) => {
+  try {
+    const { title, artist, album, genre } = req.body;
+    const newSong = new Song({ title, artist, album, genre });
+    await newSong.save();
+    res.json({ message: 'Song added!' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-// fetch songs by id
+// Get a song by ID
 // GET /api/songs/:id
-const getSongById = asyncHandler( async (req, res) => {
-    Song.findById(req.params.id)
-      .then(song => res.json(song))
-      .catch(err => res.status(400).json('Error: ' + err));
-  })
+const getSongById = asyncHandler(async (req, res) => {
+  try {
+    const song = await Song.findById(req.params.id);
+    res.json(song);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-// delete songs by id
+// Delete a song by ID
 // DELETE /api/songs/:id
 const deleteSongById = asyncHandler(async (req, res) => {
-    Song.findByIdAndDelete(req.params.id)
-      .then(() => res.json('Song deleted.'))
-      .catch(err => res.status(400).json('Error: ' + err));
-  })
+  try {
+    await Song.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Song deleted.' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-// update songs by id
+// Update a song by ID
 // PUT /api/songs/update/:id
 const updateSongById = asyncHandler(async (req, res) => {
-    Song.findById(req.params.id)
-      .then(song => {
-        song.title = req.body.title;
-        song.artist = req.body.artist;
-        song.album = req.body.album;
-        song.genre = req.body.genre;
+  try {
+    const { title, artist, album, genre } = req.body;
+    const song = await Song.findById(req.params.id);
+    
+    if (!song) {
+      return res.status(404).json({ message: 'Song not found.' });
+    }
 
-        song.save()
-          .then(() => res.json('Song updated!'))
-          .catch(err => res.status(400).json('Error: ' + err));
-      })
-      .catch(err => res.status(400).json('Error: ' + err));
-  })
+    song.title = title;
+    song.artist = artist;
+    song.album = album;
+    song.genre = genre;
 
-export {getSongs,addSong, getSongById, deleteSongById, updateSongById}
+    await song.save();
+    res.json({ message: 'Song updated!' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+export { getSongs, addSong, getSongById, deleteSongById, updateSongById };
