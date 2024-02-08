@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.send('API is running')
 })
 
-app.use('/api/song', songs)
+app.use('/api/songs', songs)
 
 
 app.listen(port, () => console.log(`server running on port ${port}`)) 
