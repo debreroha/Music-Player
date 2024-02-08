@@ -16,10 +16,20 @@ const getSongs = asyncHandler(async (req, res) => {
 // POST /api/songs/add
 const addSong = asyncHandler(async (req, res) => {
   try {
-    const { title, artist, album, genre } = req.body;
-    const newSong = new Song({ title, artist, album, genre });
-    await newSong.save();
-    res.json({ message: 'Song added!' });
+    const { artist, songs } = req.body;
+
+    // If songs is an array, add each song to the database
+    if (Array.isArray(songs)) {
+      const newSongs = songs.map(song => ({ ...song, artist }));
+      await Song.insertMany(newSongs);
+      res.json({ message: 'Songs added!' });
+    } else {
+      // If songs is not an array, treat it as a single song
+      const { title, album, genre } = req.body;
+      const newSong = new Song({ title, artist, album, genre });
+      await newSong.save();
+      res.json({ message: 'Song added!' });
+    }
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
