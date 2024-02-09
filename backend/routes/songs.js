@@ -16,7 +16,7 @@ router.route('/add').post(addSong);
 router.route('/:id').get(getSongById);
 
 // delete song
-router.route('/:id').delete(deleteSongById);
+router.route('/delete/:id').delete(deleteSongById);
 
 // update song
 router.route('/update/:id').put(updateSongById);
