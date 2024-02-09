@@ -37,7 +37,7 @@ export const deleteSong = async (id) => {
 };
 export const fetchStatistics  = async (statistics) => {
   try {
-    await axios.delete(`/api/statistics`);
+    await axios.get(`/api/statistics`);
   } catch (error) {
     throw new Error('Failed to statistics of songs');
   }

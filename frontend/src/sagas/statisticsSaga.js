@@ -1,6 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { fetchStatisticsAsync } from '../redux/statisticsActions';
+import { fetchStatisticsAsync  } from '../redux/statisticsActions';
 import { fetchStatistics } from '../services/api';
+import { setStatistics } from '../redux/statisticsSlice';
+
 
 function* fetchStatisticsSaga() {
   try {
