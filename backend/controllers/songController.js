@@ -57,27 +57,84 @@ const deleteSongById = asyncHandler(async (req, res) => {
   }
 });
 
+
+
 // Update a song by ID
 // PUT /api/songs/update/:id
 const updateSongById = asyncHandler(async (req, res) => {
   try {
     const { title, artist, album, genre } = req.body;
-    const song = await Song.findById(req.params.id);
-    
-    if (!song) {
+
+    // Use findByIdAndUpdate to find and update the existing song
+    const updatedSong = await Song.findByIdAndUpdate(
+      req.params.id,
+      { title, artist, album, genre },
+      { new: true }
+    );
+
+    // Check if the song was not found
+    if (!updatedSong) {
       return res.status(404).json({ message: 'Song not found.' });
     }
 
-    song.title = title;
-    song.artist = artist;
-    song.album = album;
-    song.genre = genre;
-
-    await song.save();
-    res.json({ message: 'Song updated!' });
+    res.json({ message: 'Song updated!', song: updatedSong });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-export { getSongs, addSong, getSongById, deleteSongById, updateSongById };
+
+
+// Get songs by title
+// GET /api/songs/title/:title
+const getSongsByTitle = asyncHandler(async (req, res) => {
+  try {
+    const { title } = req.params;
+    const songs = await Song.find({ title });
+    res.json(songs);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Get songs by artist
+// GET /api/songs/artist/:artist
+const getSongsByArtist = asyncHandler(async (req, res) => {
+  try {
+    const { artist } = req.params;
+    const songs = await Song.find({ artist });
+    res.json(songs);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Get songs by album
+// GET /api/songs/album/:album
+const getSongsByAlbum = asyncHandler(async (req, res) => {
+  try {
+    const { album } = req.params;
+    const songs = await Song.find({ album });
+    res.json(songs);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Get songs by genre
+// GET /api/songs/genre/:genre
+const getSongsByGenre = asyncHandler(async (req, res) => {
+  try {
+    const { genre } = req.params;
+    const songs = await Song.find({ genre });
+    res.json(songs);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+
+export { getSongs, addSong, getSongById, 
+  deleteSongById, updateSongById, 
+  getSongsByAlbum, getSongsByTitle, 
+  getSongsByArtist, getSongsByGenre, };
