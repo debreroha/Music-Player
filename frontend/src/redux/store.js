@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import songsReducer from './songsSlice';
-import statisticsReducer from './statisticsSlice';
+import songsReducer from './songsSlice.js';
+import statisticsReducer from './statisticsSlice.js';
 import rootSaga from '../sagas';
-import { fetchStatisticsAsync } from './statisticsActions';
+import { fetchStatisticsAsync } from './statisticsActions.js';
 
 const rootReducer = combineReducers({
   songs: songsReducer,
@@ -15,7 +15,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [sagaMiddleware],
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), sagaMiddleware],
 });
 
 sagaMiddleware.run(rootSaga);

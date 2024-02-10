@@ -15,14 +15,11 @@ const app = express()
 app.use(express.json());
 app.use(cors());
 
-
 app.get('/', (req, res) => {
     res.send('API is running')
 })
 
 app.use('/api/songs', songs)
 app.use('/api/statistics', statisticsRoutes);
-
-
 
 app.listen(port, () => console.log(`server running on port ${port}`)) 
