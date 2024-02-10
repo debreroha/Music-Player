@@ -23,9 +23,6 @@ const SongForm = () => {
 
   return (
     <div>
-     Apologies for the incomplete response. Here's the continuation of the code for Step 7:
-
-```javascript
       <h2>Add Song</h2>
       <form onSubmit={handleSubmit}>
         <label>

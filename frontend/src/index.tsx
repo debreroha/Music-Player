@@ -1,16 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { 
+  createBrowserRouter, 
+  createRoutesFromElements, 
+  Route, 
+  RouterProvider } from 'react-router-dom';
+
 
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from './redux/store';
+import SongList from './components/SongList';
+import Statistics from './components/Statistics';
+import SongForm from './components/SongForm';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<App />}>
+      <Route index={true} path='/' element={<SongList />} ></Route>
+      <Route path='/Statistics' element={<Statistics />} ></Route>
+      <Route path='/' element={<SongForm />} ></Route>
+    </Route>
+  )
+)
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 
