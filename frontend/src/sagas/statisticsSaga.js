@@ -16,3 +16,4 @@ function* fetchStatisticsSaga() {
 export default function* statisticsSaga() {
   yield takeLatest(fetchStatisticsAsync.type, fetchStatisticsSaga);
 }
+

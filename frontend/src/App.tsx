@@ -1,25 +1,19 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import SongList from './components/SongList';
+import Statistics from './components/Statistics';
+import SongForm from './components/SongForm';
+// import SongsPage from './pages/SongsPage';
+// import StatisticsPage from './pages/StatisticsPage';
+// import { useSelector } from 'react-redux';
 
 function App() {
-  const songs = useSelector((state: any) => state.songs);
-  const statistics = useSelector((state: any) => state.statistics);
 
   return (
     <div>
-      <h1>Welcome to the Music Project</h1>
-
-      <h2>Songs</h2>
-      {songs.map((song: any) => (
-        <div key={song.id}>{song.title}</div>
-      ))}
-
-      <h2>Statistics</h2>
-      <ul>
-        <li>Total Songs: {statistics.totalSongs}</li>
-        <li>Total Artists: {statistics.totalArtists}</li>
-        <li>Total Albums: {statistics.totalAlbums}</li>
-      </ul>
+       <SongList />
+       <Statistics />
+       <SongForm />
+       <h1>welcome</h1>
     </div>
   );
 }

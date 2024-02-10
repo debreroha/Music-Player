@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSongs, deleteSong } from '../redux/songsSlice';
+import { fetchSongsAsync, deleteSong } from '../redux/songsSlice';
 
 const SongList = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
 
   useEffect(() => {
-    dispatch(fetchSongs());
+    dispatch(fetchSongsAsync());
   }, [dispatch]);
 
   const handleDelete = (id) => {
