@@ -1,21 +1,28 @@
 import React from 'react';
-import SongList from './components/SongList';
-import Statistics from './components/Statistics';
-import SongForm from './components/SongForm';
-// import SongsPage from './pages/SongsPage';
-// import StatisticsPage from './pages/StatisticsPage';
-// import { useSelector } from 'react-redux';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useSelector, useDispatch } from "react-redux";
+import { getSongsFetch } from './songState/songsState';
+import { useEffect } from "react";
+import { rootState } from './songState/songsState';
 
-function App() {
+const App: React.FC = () => {
+  const dispatch = useDispatch();
+  const songs = useSelector((state: rootState) => state.songs.songs);
+
+  useEffect(() => {
+    dispatch(getSongsFetch());
+  }, [dispatch]);
 
   return (
-    <div>
-       <SongList />
-       <Statistics />
-       <SongForm />
-       <h1>welcome</h1>
-    </div>
+    <>
+  
+      <h1>
+        {songs?.map((item, index) => (
+          <li key={index}>{item.album}</li>
+        ))}
+      </h1>.
+    </>
   );
-}
+};
 
 export default App;
