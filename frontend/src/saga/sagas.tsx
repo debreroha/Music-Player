@@ -4,6 +4,8 @@ import { call, all, put, takeEvery } from "redux-saga/effects";
 import {
   getSongsSuccess,
   getSongsFailure,
+  addSongSuccess,
+  addSongFailure
 
 } from "../songState/songsState";
 import axios, { AxiosResponse } from "axios";
@@ -35,3 +37,30 @@ export function* watcherSongSaga() {
 export default function* rootSaga() {
   yield all([watcherSongSaga()]);
 }
+
+
+export const addSongToApi = (newSong: SongType): Promise<AxiosResponse<SongType>> => {
+  return axios.post<SongType>(`${baseUrl}/songs`, newSong);
+};
+
+
+function* addSongSaga(action: SongActionType) {
+  try {
+    const response: AxiosResponse<SongType> = yield call(addSongToApi, action.payload);
+    const addedSong: SongType = response.data;
+    yield put(addSongSuccess(addedSong));
+  } catch (e: any) {
+    yield put(addSongFailure(e.message));
+  }
+}
+
+export function* watcherAddSongSaga() {
+  yield takeEvery("songs/addSongFetch", addSongSaga);
+ 
+}
+
+export  function* addRootSaga() {
+  yield all([watcherAddSongSaga()]);
+}
+
+

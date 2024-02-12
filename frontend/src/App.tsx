@@ -18,7 +18,7 @@ const App: React.FC = () => {
   
       <h1>
         {songs?.map((item, index) => (
-          <li key={index}>{item.album}</li>
+          <li key={index}>{item.artist}</li>
         ))}
       </h1>.
     </>

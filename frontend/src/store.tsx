@@ -5,7 +5,7 @@ import songReducer from "./songState/songsState";
 import songSaga from "./saga/sagas";
 
 const saga = createSagaMiddleWare();
-const strore = configureStore({
+const store = configureStore({
   reducer: {
     songs: songReducer,
   },
@@ -13,4 +13,4 @@ const strore = configureStore({
 });
 
 saga.run(songSaga);
-export default strore;
+export default store;
