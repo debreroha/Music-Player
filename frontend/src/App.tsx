@@ -5,7 +5,7 @@ import { getSongsFetch, addSongFetch  } from './songState/songsState';
 import { useEffect } from "react";
 import { rootState } from './songState/songsState';
 import GetSong from './components/GetSong';
-import AddSong from './components/AddSong';
+// import AddSong from './components/AddSong';
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const App = () => {
     <>
   
       <GetSong />
-      <AddSong />
+      {/* <AddSong /> */}
       {/* <button onClick={handleAddSong}>Add Song</button> */}
 
     </>
