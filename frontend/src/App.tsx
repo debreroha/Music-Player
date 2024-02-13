@@ -1,26 +1,30 @@
 import React from 'react';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useSelector, useDispatch } from "react-redux";
-import { getSongsFetch } from './songState/songsState';
+import { getSongsFetch, addSongFetch  } from './songState/songsState';
 import { useEffect } from "react";
 import { rootState } from './songState/songsState';
+import GetSong from './components/GetSong';
 
-const App: React.FC = () => {
-  const dispatch = useDispatch();
-  const songs = useSelector((state: rootState) => state.songs.songs);
+const App = () => {
+  // const dispatch = useDispatch();
+  // const songs = useSelector((state: rootState) => state.songs.songs);
 
-  useEffect(() => {
-    dispatch(getSongsFetch());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getSongsFetch());
+  // }, [dispatch]);
+
+  // const handleAddSong = () => {
+  //   // Dispatch the addSongFetch action when you want to add a new song
+  //   dispatch(addSongFetch(/* newSongData */));
+  // };
 
   return (
     <>
   
-      <h1>
-        {songs?.map((item, index) => (
-          <li key={index}>{item.artist}</li>
-        ))}
-      </h1>.
+      <GetSong />
+      {/* <button onClick={handleAddSong}>Add Song</button> */}
+
     </>
   );
 };
