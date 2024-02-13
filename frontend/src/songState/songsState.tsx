@@ -25,6 +25,18 @@ export interface SongType {
     type: string;
     payload: SongType;
   }
+  export interface AddSongFetchAction {
+    type: 'ADD_SONG_FETCH';
+  }
+
+  export interface SongActionType {
+    type: string; // change to string type
+    payload: SongType;
+  }
+
+  const isAddSongFetchAction = (action: any): action is AddSongFetchAction => {
+    return action.type === 'ADD_SONG_FETCH';
+  };
 
 const initialState: SongsState = {
   songs: [],
@@ -50,7 +62,7 @@ const songsSlice = createSlice({
       state.errorMessage = action.payload;
     },
     // add song actions
-    addSongFetch: (state) => {
+    addSongFetch: (state: SongsState) => {
       state.isLoading = true;
       state.errorMessage = null;
     },
@@ -100,6 +112,7 @@ const songsSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = action.payload;
     },
+    
     
   },
 });

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { getSongsFetch, rootState } from '../songState/songsState';
 import { useDispatch, useSelector } from 'react-redux';
 
-const GetSong= () => {
+const GetSong:React.FC= () => {
   const dispatch = useDispatch();
   const songs = useSelector((state: rootState) => state.songs.songs);
 
