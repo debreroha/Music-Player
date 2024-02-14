@@ -62,7 +62,7 @@ const songsSlice = createSlice({
       state.errorMessage = action.payload;
     },
     // add song actions
-    addSongFetch: (state: SongsState) => {
+    addSongFetch: (state, action) => {
       state.isLoading = true;
       state.errorMessage = null;
     },
