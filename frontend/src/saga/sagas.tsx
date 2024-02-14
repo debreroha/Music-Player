@@ -40,7 +40,7 @@ export default function* rootSaga() {
 
 
 export const addSongToApi = (newSong: SongType): Promise<AxiosResponse<SongType>> => {
-  return axios.post<SongType>(`${baseUrl}/songs/add`, newSong);
+  return axios.post<SongType>(`${baseUrl}/songs`, newSong);
 };
 
 

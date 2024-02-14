@@ -28,15 +28,7 @@ export interface SongType {
   export interface AddSongFetchAction {
     type: 'ADD_SONG_FETCH';
   }
-
-  export interface SongActionType {
-    type: string; // change to string type
-    payload: SongType;
-  }
-
-  const isAddSongFetchAction = (action: any): action is AddSongFetchAction => {
-    return action.type === 'ADD_SONG_FETCH';
-  };
+ 
 
 const initialState: SongsState = {
   songs: [],

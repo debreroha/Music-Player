@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import createSagaMiddleWare from "redux-saga";
+import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
 import songReducer from "./songState/songsState";
-import songSaga from "./saga/sagas";
+import rootSaga from "./saga/sagas";
+import { addRootSaga } from "./saga/sagas";
 
-const saga = createSagaMiddleWare();
+const saga = createSagaMiddleware();
 const store = configureStore({
   reducer: {
     songs: songReducer,
@@ -12,5 +13,6 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(saga),
 });
 
-saga.run(songSaga);
+saga.run(rootSaga);
+saga.run(addRootSaga);
 export default store;
