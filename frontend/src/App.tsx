@@ -24,7 +24,7 @@ const App = () => {
     <>
   
       <GetSong />
-      <AddSong />
+      {/* <AddSong /> */}
       {/* <button onClick={handleAddSong}>Add Song</button> */}
 
     </>

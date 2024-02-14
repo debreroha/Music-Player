@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
 interface SongType {
-  [key: string]: string | undefined;
+  [key: string]: string | Date | undefined;
 }
 
 const StyledButton = styled.button`
@@ -27,6 +27,7 @@ const GetSong: React.FC = () => {
   const properties = ['Title', 'Artist', 'Album', 'Genre'];
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
   const [distinctValues, setDistinctValues] = useState<string[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string>('');
 
   useEffect(() => {
     dispatch(getSongsFetch());
@@ -35,8 +36,14 @@ const GetSong: React.FC = () => {
   const handlePropertyClick = (property: string) => {
     setSelectedProperty(property);
     const values = Array.from(
-      new Set(songs.map((item) => String(item[property as keyof typeof item] ?? '') as string))    );
+      new Set(songs.map((item) => String(item[property as keyof typeof item] ?? '') as string))
+    );
     setDistinctValues(values);
+    setSelectedValue('');
+  };
+
+  const handleValueChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(event.target.value);
   };
 
   return (
@@ -52,11 +59,23 @@ const GetSong: React.FC = () => {
       {selectedProperty && (
         <div>
           <h2>{selectedProperty} Values</h2>
-          <StyledDropdown>
+          <StyledDropdown value={selectedValue} onChange={handleValueChange}>
+            <option value="">Select a value</option>
             {distinctValues.map((value, index) => (
-              <option key={index}>{value}</option>
+              <option key={index} value={value}>
+                {value}
+              </option>
             ))}
           </StyledDropdown>
+          {selectedValue && (
+            <ul>
+              {songs
+                .filter((item) => item[selectedProperty as keyof typeof item] === selectedValue)
+                .map((item, index) => (
+                  <li key={index}>{String(item[selectedProperty as keyof typeof item])}</li>
+                ))}
+            </ul>
+          )}
         </div>
       )}
     </div>
