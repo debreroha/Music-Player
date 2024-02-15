@@ -1,83 +1,75 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getSongsFetch, rootState } from '../songState/songsState';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from '@emotion/styled';
-
-interface SongType {
-  [key: string]: string | Date | undefined;
-}
-
-const StyledButton = styled.button`
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  margin: 5px;
-  padding: 8px;
-  cursor: pointer;
-`;
-
-const StyledDropdown = styled.select`
-  margin-top: 10px;
-  padding: 5px;
-`;
 
 const GetSong: React.FC = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state: rootState) => state.songs.songs);
-  const properties = ['Title', 'Artist', 'Album', 'Genre'];
-  const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
-  const [distinctValues, setDistinctValues] = useState<string[]>([]);
-  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [distinctData, setDistinctData] = useState<{ [key: string]: string[] }>({});
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handleButtonClick = (category: string) => {
+    setSelectedCategory(selectedCategory === category ? null : category);
+    dispatch(getSongsFetch());
+  };
 
   useEffect(() => {
-    dispatch(getSongsFetch());
-  }, [dispatch]);
+    if (songs && selectedCategory) {
+      const uniqueData: { [key: string]: Set<string> } = {
+        title: new Set<string>(),
+        artist: new Set<string>(),
+        album: new Set<string>(),
+        genre: new Set<string>(),
+      };
 
-  const handlePropertyClick = (property: string) => {
-    setSelectedProperty(property);
-    const values = Array.from(
-      new Set(songs.map((item) => String(item[property as keyof typeof item] ?? '') as string))
-    );
-    setDistinctValues(values);
-    setSelectedValue('');
-  };
+      songs.forEach((item) => {
+        uniqueData.title.add(item.title);
+        uniqueData.artist.add(item.artist);
+        uniqueData.album.add(item.album);
+        uniqueData.genre.add(item.genre);
+      });
 
-  const handleValueChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(event.target.value);
-  };
+      setDistinctData({
+        title: Array.from(uniqueData.title),
+        artist: Array.from(uniqueData.artist),
+        album: Array.from(uniqueData.album),
+        genre: Array.from(uniqueData.genre),
+      });
+    }
+  }, [songs, selectedCategory]);
 
   return (
     <div>
-      <h1>Properties</h1>
-      <div>
-        {properties.map((property, index) => (
-          <StyledButton key={index} onClick={() => handlePropertyClick(property)}>
-            {property}
-          </StyledButton>
-        ))}
-      </div>
-      {selectedProperty && (
+      <button onClick={() => handleButtonClick('title')}>
+        {selectedCategory === 'title' ? 'Undo' : 'Titles'}
+      </button>
+
+      <button onClick={() => handleButtonClick('artist')}>
+        {selectedCategory === 'artist' ? 'Undo' : 'Artists'}
+      </button>
+
+      <button onClick={() => handleButtonClick('album')}>
+        {selectedCategory === 'album' ? 'Undo' : 'Albums'}
+      </button>
+
+      <button onClick={() => handleButtonClick('genre')}>
+        {selectedCategory === 'genre' ? 'Undo' : 'Genres'}
+      </button>
+
+      {selectedCategory && distinctData[selectedCategory] && (
         <div>
-          <h2>{selectedProperty} Values</h2>
-          <StyledDropdown value={selectedValue} onChange={handleValueChange}>
-            <option value="">Select a value</option>
-            {distinctValues.map((value, index) => (
-              <option key={index} value={value}>
-                {value}
-              </option>
+          <h2>{selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}:</h2>
+          
+            {distinctData[selectedCategory].map((item, index) => (
+              <div key={index}>
+                <i className="fas fa-music"></i>🎶 {item}
+
+              </div>
             ))}
-          </StyledDropdown>
-          {selectedValue && (
-            <ul>
-              {songs
-                .filter((item) => item[selectedProperty as keyof typeof item] === selectedValue)
-                .map((item, index) => (
-                  <li key={index}>{String(item[selectedProperty as keyof typeof item])}</li>
-                ))}
-            </ul>
-          )}
+          
         </div>
       )}
+      
     </div>
   );
 };
