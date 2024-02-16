@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  getSongsFetch,
-  addSongFetch,
-  editSongFetch,
-  deleteSongFetch,
-  rootState,
-  SongType,
-} from '../songState/songsState';
+import { getSongsFetch, rootState } from '../songState/songsState';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,31 +11,8 @@ const GetSong: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleButtonClick = (category: string) => {
-    setSelectedCategory((prevCategory) => (prevCategory === category ? null : category));
+    setSelectedCategory(selectedCategory === category ? null : category);
     dispatch(getSongsFetch());
-  };
-
-  const handleAddSong = () => {
-    const newSong: SongType = {
-      title: 'New Song',
-      artist: 'New Artist',
-      album: 'New Album',
-      genre: 'New Genre',
-    };
-
-    dispatch(addSongFetch(newSong));
-  };
-
-  const handleEditSong = (index: number, field: string, newValue: string) => {
-    const editedSong: SongType = { ...songs[index], [field]: newValue };
-    dispatch(editSongFetch(editedSong)); // Pass the edited song only
-  };
-
-  const handleDeleteSong = (index: number) => {
-    const songId = songs[index]?._id;
-    if (songId) {
-      dispatch(deleteSongFetch(songId));
-    }
   };
 
   useEffect(() => {
@@ -54,7 +24,7 @@ const GetSong: React.FC = () => {
         genre: new Set<string>(),
       };
 
-      songs.forEach((item: SongType) => {
+      songs.forEach((item) => {
         uniqueData.title.add(item.title);
         uniqueData.artist.add(item.artist);
         uniqueData.album.add(item.album);
@@ -91,9 +61,17 @@ const GetSong: React.FC = () => {
       {selectedCategory && distinctData[selectedCategory] && (
         <div>
           <h2>{selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}:</h2>
+          
           {distinctData[selectedCategory].map((item, index) => (
             <div key={index}>
-              <FontAwesomeIcon icon={faMusic} />🎵 {item}
-              <button onClick={() => handleEditSong(index, selectedCategory, 'New Song')}>
-                Edit
-              </button
+              <FontAwesomeIcon icon={faMusic} /> {item}
+            </div>
+          ))}
+          
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default GetSong;
