@@ -5,21 +5,20 @@ import AddSong from './components/AddSong';
 
 const Container = styled.div`
   display: flex;
-  padding-top: 10px;
-  margin-left:200px;
-  margin-right:200px;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  border: 1px solid black;
-  // width: 50px;
-  height: 100vh;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  background-color: #f2f2f2;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  width: fit-content;
 `;
 
 const App = () => {
   return (
     <Container>
       <GetSong />
-      <br />
       <AddSong />
     </Container>
   );
