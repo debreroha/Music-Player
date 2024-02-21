@@ -33,16 +33,10 @@ export function* watcherSongSaga() {
 }
 
 
-//root saga
-// export default function* rootSaga() {
-//   yield all([watcherSongSaga()]);
-// }
-
-
+//// add songs to DATABASE
 export const addSongToApi = (newSong: SongType): Promise<AxiosResponse<SongType>> => {
-  return axios.post<SongType>(`${baseUrl}/songs`, newSong);
+  return axios.post<SongType>(`${baseUrl}/songs/add`, newSong);
 };
-
 
 function* addSongSaga(action: SongActionType) {
   try {
@@ -58,10 +52,6 @@ export function* watcherAddSongSaga() {
   yield takeEvery("songs/addSongFetch", addSongSaga);
  
 }
-
-// export  function* addRootSaga() {
-//   yield all([watcherAddSongSaga()]);
-// }
 
 
 //root saga

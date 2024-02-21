@@ -13,8 +13,19 @@ const AddSong: React.FC = () => {
   });
 
   const handleAddSong = () => {
-    // const songToAdd: SongType = { ...newSong };
-    dispatch(addSongFetch(newSong));
+    // Dispatch the addSongFetch action with the newSong details
+    dispatch({
+      type: 'songs/addSongFetch',
+      payload: {
+        title: newSong.title,
+        artist: newSong.artist,
+        album: newSong.album,
+        genre: newSong.genre,
+        // Add other properties as needed
+      },
+    });
+  
+    // Reset the state to clear the form
     setNewSong({
       title: '',
       artist: '',
@@ -22,6 +33,7 @@ const AddSong: React.FC = () => {
       genre: '',
     });
   };
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
