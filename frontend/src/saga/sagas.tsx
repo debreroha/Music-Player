@@ -34,9 +34,9 @@ export function* watcherSongSaga() {
 
 
 //root saga
-export default function* rootSaga() {
-  yield all([watcherSongSaga()]);
-}
+// export default function* rootSaga() {
+//   yield all([watcherSongSaga()]);
+// }
 
 
 export const addSongToApi = (newSong: SongType): Promise<AxiosResponse<SongType>> => {
@@ -59,8 +59,15 @@ export function* watcherAddSongSaga() {
  
 }
 
-export  function* addRootSaga() {
-  yield all([watcherAddSongSaga()]);
+// export  function* addRootSaga() {
+//   yield all([watcherAddSongSaga()]);
+// }
+
+
+//root saga
+export default function* rootSaga() {
+  yield all([
+    watcherSongSaga(),
+    watcherAddSongSaga(),
+  ]);
 }
-
-

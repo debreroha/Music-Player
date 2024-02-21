@@ -10,7 +10,7 @@ export interface SongType {
     createdAt?: Date;
     updatedAt?: Date;
   }
-  
+   
   export interface SongsState {
     songs: SongType[];
     isLoading: boolean;
@@ -68,7 +68,7 @@ const songsSlice = createSlice({
     },
 
     // edit song actions
-    editSongFetch: (state) => {
+    editSongFetch: (state, action) => {
       state.isLoading = true;
       state.errorMessage = null;
     },
