@@ -13,7 +13,7 @@ const Container = styled.div`
   background-color: #f2f2f2;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   width: fit-content;
-  height: 300px; /* Set the desired height for the cards */
+  // height: 300px; 
 `;
 
 const App = () => {
