@@ -112,6 +112,7 @@ const songsSlice = createSlice({
   },
 });
 
+//  export all the methods
 export const {
   getSongsFetch,
   getSongsSuccess,
