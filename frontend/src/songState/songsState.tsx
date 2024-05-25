@@ -16,7 +16,8 @@ export interface SongType {
     isLoading: boolean;
     errorMessage: string | null;
   }
-  
+
+// rootState interface
   export interface rootState {
     songs: SongsState;
   }
