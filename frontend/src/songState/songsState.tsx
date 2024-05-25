@@ -21,7 +21,8 @@ export interface SongType {
   export interface rootState {
     songs: SongsState;
   }
-  
+
+// song action type interface
   export interface SongActionType {
     type: string;
     payload: SongType;
