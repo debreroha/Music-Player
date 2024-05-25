@@ -17,6 +17,7 @@ const app = express()
 app.use(express.json());
 app.use(cors());
 
+// checking if it is working
 app.get('/', (req, res) => {
     res.send('API is running')
 })
