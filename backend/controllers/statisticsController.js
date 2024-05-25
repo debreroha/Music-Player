@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Song from '../models/song.js';
 
+// get statistics
 const getStatistics = asyncHandler(async (req, res) => {
   try {
     const totalSongs = await Song.countDocuments();
