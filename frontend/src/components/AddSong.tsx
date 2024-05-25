@@ -16,6 +16,7 @@ const Form = styled.form`
   margin-top: 20px;
 `;
 
+// declare label variable
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
