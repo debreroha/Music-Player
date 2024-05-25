@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
     res.send('API is running')
 })
 
+// declare the endpoints
 app.use('/api/songs', songs)
 app.use('/api/statistics', statisticsRoutes);
 
