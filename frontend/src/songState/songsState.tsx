@@ -10,7 +10,8 @@ export interface SongType {
     createdAt?: Date;
     updatedAt?: Date;
   }
-   
+
+// song state interface
   export interface SongsState {
     songs: SongType[];
     isLoading: boolean;
