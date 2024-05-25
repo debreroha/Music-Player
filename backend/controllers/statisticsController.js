@@ -20,7 +20,7 @@ const getStatistics = asyncHandler(async (req, res) => {
       { $group: { _id: '$artist', count: { $sum: 1 } } },
       { $match: { _id: { $ne: null } } },
     ]);
-
+    // count albums
     const albumCounts = await Song.aggregate([
       { $group: { _id: '$album', count: { $sum: 1 } } },
       { $match: { _id: { $ne: null } } },
