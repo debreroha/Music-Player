@@ -12,6 +12,7 @@ const port = process.env.PORT || 5000
 
 connectDB() //connect to mongoDB
 
+// initialize express in the backend
 const app = express()
 app.use(express.json());
 app.use(cors());
