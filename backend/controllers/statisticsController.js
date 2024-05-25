@@ -40,5 +40,5 @@ const getStatistics = asyncHandler(async (req, res) => {
   }
 });
 
-
+// export component 
 export {getStatistics}
