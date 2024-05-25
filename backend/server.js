@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import songs from './routes/songs.js'
 import statisticsRoutes from './routes/statistics.js'
 
+// using environment variable
 const port = process.env.PORT || 5000
 
 connectDB() //connect to mongoDB
