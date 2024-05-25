@@ -39,6 +39,7 @@ const initialState: SongsState = {
   errorMessage: null,
 };
 
+// create slice
 const songsSlice = createSlice({
   name: "songs",
   initialState,
