@@ -12,6 +12,7 @@ const Button = styled.button`
   margin-top: 10px;
 `;
 
+// declare form variable for styling
 const Form = styled.form`
   margin-top: 20px;
 `;
